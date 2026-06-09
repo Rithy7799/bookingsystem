@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Invoice – Maple Salon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Noto+Sans+Khmer:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --ink:#111827; --muted:#6b7280; --light:#f3f4f6; --brand:#a855f7; --accent:#10b981; --border:#e5e7eb;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,Apple Color Emoji,Noto Sans,Arial,"Noto Sans Khmer",sans-serif; color:var(--ink); background:#fff; margin:0}
+
+    .page{max-width:900px; margin:24px auto; padding:24px; background:#fff; border:1px solid var(--border); border-radius:16px}
+    .header{display:flex; align-items:center; justify-content:space-between; gap:16px; border-bottom:2px solid var(--border); padding-bottom:16px}
+    .brand{display:flex; align-items:center; gap:14px}
+    .logo{width:52px; height:52px; border-radius:12px; background:linear-gradient(135deg,var(--brand),#f59e0b); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800; letter-spacing:0.5px}
+    .brand h1{font-size:20px; line-height:1.2; margin:0}
+    .brand small{display:block; color:var(--muted); font-weight:500}
+
+    .title{ text-align:right }
+    .title h2{margin:0; font-size:26px}
+    .kh{ font-family:"Noto Sans Khmer", Inter, sans-serif }
+    .muted{ color:var(--muted) }
+
+    .meta{display:grid; grid-template-columns:1fr 1fr; gap:18px; padding:16px 0 6px}
+    .card{border:1px solid var(--border); border-radius:12px; padding:14px}
+    .card h3{margin:0 0 10px; font-size:14px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted)}
+    .grid-2{display:grid; grid-template-columns: 1fr 1fr; gap:10px}
+    .row{display:flex; gap:6px; align-items:baseline}
+    .row label{min-width:120px; color:var(--muted)}
+
+    table{width:100%; border-collapse:separate; border-spacing:0; margin-top:10px; border:1px solid var(--border); border-radius:12px; overflow:hidden}
+    thead th{background:var(--light); text-align:left; font-weight:600; font-size:13px; padding:10px 12px; border-bottom:1px solid var(--border)}
+    tbody td{padding:10px 12px; border-bottom:1px dashed var(--border); vertical-align:top}
+    tbody tr:last-child td{border-bottom:none}
+    tfoot td{padding:8px 12px}
+    .num{text-align:right; white-space:nowrap}
+    .center{text-align:center}
+    .desc{color:var(--ink)}
+    .muted-small{font-size:12px; color:var(--muted)}
+
+    .totals{margin-top:16px; display:grid; grid-template-columns: 1fr minmax(280px, 40%); gap:16px; align-items:start}
+    .notes{border:1px dashed var(--border); border-radius:12px; padding:12px}
+    .sum{border:1px solid var(--border); border-radius:12px; padding:12px}
+    .sum table{border:none}
+    .sum tr td{border-bottom:none}
+    .sum .label{color:var(--muted)}
+    .sum .grand{font-weight:800; font-size:18px}
+
+    .footer{margin-top:20px; display:flex; gap:16px; align-items:flex-start}
+    .qr{width:120px; height:120px; border:1px dashed var(--border); border-radius:12px; display:flex; align-items:center; justify-content:center}
+    .pay{flex:1}
+    .badge{display:inline-block; padding:6px 10px; border-radius:999px; background:#f1f5f9; border:1px solid var(--border); font-size:12px}
+
+    .actions{display:flex; gap:8px; justify-content:flex-end; margin-top:18px}
+    .btn{border:1px solid var(--border); background:#fff; padding:10px 14px; border-radius:12px; cursor:pointer; font-weight:600}
+    .btn.primary{background:var(--ink); color:#fff; border-color:var(--ink)}
+
+    /* Print styles */
+    @media print{
+      body{background:#fff}
+      .page{border:none; border-radius:0; box-shadow:none; margin:0; padding:0}
+      .actions{display:none !important}
+      .btn{display:none !important}
+      .page-break{page-break-before:always}
+      @page{size:A4; margin:14mm}
+    }
+  </style>
+</head>
+<body>
+  <div class="page" id="invoice">
+    <!-- Header -->
+    <div class="header">
+      <div class="brand">
+        <div class="logo">MS</div>
+        <div>
+          <h1>Maple Salon <small class="kh">វិស័យសេវាសក់ និងស្ប៉ា</small></h1>
+          <small class="muted">#12, Street 123, Phnom Penh • 012 345 678 • IG: @maplesalon</small>
+        </div>
+      </div>
+      <div class="title">
+        <h2>INVOICE <span class="kh" style="font-weight:600">• វិក្កយបត្រ</span></h2>
+        <div class="muted">No: <strong>MS-INV-000123</strong></div>
+        <div class="muted">Date: <strong>2025-09-12</strong></div>
+      </div>
+    </div>
+
+    <!-- Meta -->
+    <div class="meta">
+      <div class="card">
+        <h3>Bill To <span class="kh">• អតិថិជន</span></h3>
+        <div class="grid-2">
+          <div class="row"><label>Name <span class="kh">ឈ្មោះ</span>:</label><div><strong>Sokha Phan</strong></div></div>
+          <div class="row"><label>Phone <span class="kh">ទូរស័ព្ទ</span>:</label><div>012 555 888</div></div>
+          <div class="row"><label>Member ID:</label><div>#MB-0021</div></div>
+          <div class="row"><label>Branch <span class="kh">សាខា</span>:</label><div>Maple Toul Kork</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Invoice Info <span class="kh">• ព័ត៌មានវិក្កយបត្រ</span></h3>
+        <div class="grid-2">
+          <div class="row"><label>Cashier <span class="kh">បេឡា</span>:</label><div>Nita</div></div>
+          <div class="row"><label>Method <span class="kh">វិធីបង់</span>:</label><div>ABA</div></div>
+          <div class="row"><label>Check-in:</label><div>14:05</div></div>
+          <div class="row"><label>Check-out:</label><div>15:20</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Items -->
+    <table aria-label="Items">
+      <thead>
+        <tr>
+          <th class="center" style="width:48px">#</th>
+          <th>Service / Description <div class="muted-small kh">សេវា / ពិពណ៌នា</div></th>
+          <th class="center" style="width:72px">Qty <div class="muted-small kh">ចំនួន</div></th>
+          <th class="num" style="width:120px">Unit Price <div class="muted-small kh">តម្លៃ/មុខ</div></th>
+          <th class="num" style="width:110px">Discount <div class="muted-small kh">បញ្ចុះ</div></th>
+          <th class="num" style="width:130px">Amount <div class="muted-small kh">តម្លៃសរុប</div></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="center">1</td>
+          <td class="desc">Haircut – Women (Senior Stylist) <div class="muted-small">Staff: Lina</div></td>
+          <td class="center">1</td>
+          <td class="num">$18.00</td>
+          <td class="num">$0.00</td>
+          <td class="num">$18.00</td>
+        </tr>
+        <tr>
+          <td class="center">2</td>
+          <td class="desc">Hair Spa – Moisture Repair <div class="muted-small">Bundle promo</div></td>
+          <td class="center">1</td>
+          <td class="num">$22.00</td>
+          <td class="num">$2.00</td>
+          <td class="num">$20.00</td>
+        </tr>
+        <tr>
+          <td class="center">3</td>
+          <td class="desc">Maple Hair Oil 50ml <div class="muted-small">SKU: MHO-50</div></td>
+          <td class="center">1</td>
+          <td class="num">$12.00</td>
+          <td class="num">$0.00</td>
+          <td class="num">$12.00</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Totals & Notes -->
+    <div class="totals">
+      <div class="notes">
+        <strong>Notes <span class="kh">• កំណត់សម្គាល់</span></strong>
+        <p class="muted" style="margin:8px 0 0">Thank you for choosing Maple Salon. Exchange policy for retail products within 7 days (unopened). No cash refunds on services.</p>
+        <p class="muted kh" style="margin:6px 0 0">អរគុណសម្រាប់ការជ្រើសរើស Maple Salon។ ផលិតផលអាចប្តូរបានក្នុងរយៈពេល ៧ ថ្ងៃ (មិនបានបើក)។ មិនមានការសងប្រាក់សម្រាប់សេវា។</p>
+      </div>
+
+      <div class="sum">
+        <table style="width:100%">
+          <tr><td class="label">Subtotal</td><td class="num">$50.00</td></tr>
+          <tr><td class="label">Discount</td><td class="num">-$2.00</td></tr>
+          <tr><td class="label">Tip</td><td class="num">$3.00</td></tr>
+          <tr><td class="label">Operation</td><td class="num">$0.50</td></tr>
+          <tr><td class="label">VAT (10%)</td><td class="num">$4.15</td></tr>
+          <tr><td class="grand">Grand Total</td><td class="num grand">$55.65</td></tr>
+          <tr><td class="label">Paid</td><td class="num">$60.00 (ABA)</td></tr>
+          <tr><td class="label">Change</td><td class="num">$4.35</td></tr>
+          <tr><td class="label">In Riel (៛)</td><td class="num">៛230,000</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="qr">QR</div>
+      <div class="pay">
+        <div class="badge">Thank you • អរគុណ</div>
+        <p class="muted" style="margin:10px 0 0">Scan to view receipt online / ប្ដូរទៅបង្កាន់ដៃអនឡាញ</p>
+        <p class="muted" style="margin:4px 0 0">Powered by Maple Salon POS</p>
+      </div>
+    </div>
+
+    <!-- Actions (hidden on print) -->
+    <div class="actions">
+      <button class="btn" onclick="window.print()">Print</button>
+      <button class="btn primary" onclick="downloadPDF()">Save as PDF</button>
+    </div>
+  </div>
+
+  <script>
+    // Simple client-side PDF via print; advanced export would need a library (not included here)
+    function downloadPDF(){
+      window.print();
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<?php
+use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+use App\Models\User;
+
+class RolePermissionSeeder extends Seeder
+{
+    public function run()
+    {
+        $adminRole = Role::create(['name' => 'admin']);
+        $staffRole = Role::create(['name' => 'staff']);
+
+        $createBooking = Permission::create(['name' => 'create booking']);
+        $deleteBooking = Permission::create(['name' => 'delete booking']);
+
+        $adminRole->givePermissionTo([$createBooking, $deleteBooking]);
+        $staffRole->givePermissionTo($createBooking);
+
+        $admin = User::create([
+            'name' => 'Leak',
+            'email' => 'admin@gmail.com',
+            'password' => bcrypt('password123'),
+        ]);
+
+        $admin->assignRole('admin');
+    }
+}

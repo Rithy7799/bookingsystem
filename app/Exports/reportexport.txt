@@ -1,0 +1,52 @@
+<?php
+
+namespace App\Exports;
+
+use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithMapping;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+
+class ReportsExport implements FromCollection, WithHeadings, WithMapping, ShouldAutoSize
+{
+    public function __construct(private Collection $rows) {}
+
+    public function collection()
+    {
+        return $this->rows;
+    }
+
+    public function headings(): array
+    {
+        return [
+            'ID',
+            'Booking Date',
+            'Customer',
+            'Phone',
+            'Branch',
+            'Status',
+            'Payment',
+            'Services',
+            'Date',
+           
+            
+        ];
+    }
+
+    public function map($row): array
+    {
+        return [
+            $row->id,
+            optional($row->booking_date)->format('Y-m-d'),
+            $row->name,
+            $row->phone,
+            optional($row->branch)->name,
+            $row->status,
+            (float) $row->payment,
+            $row->services ? $row->services->pluck('name')->join(', ') : '',
+            optional($row->created_at)->format('Y-m-d H:i'),
+            $row->totalRevenue,
+        ];
+    }
+}
