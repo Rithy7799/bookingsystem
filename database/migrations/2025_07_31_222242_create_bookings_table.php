@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             // $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('branch_id')->constrained('branches')->cascadeOnDelete();
-            $table->foreignId('service_id')->constrained('services')->cascadeOnDelete();
             $table->string('name');
             $table->string('phone');
             $table->date('booking_date');
